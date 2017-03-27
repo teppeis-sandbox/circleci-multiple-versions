@@ -25,7 +25,7 @@ jobs:
     docker:
       - image: node
     working_directory: ~/wd
-    steps: &id001
+    steps: &common-steps
       - run: npm version
       - run:
           name: Versions
@@ -51,16 +51,16 @@ jobs:
     docker:
       - image: node:4
     working_directory: ~/wd
-    steps: *id001
+    steps: *common-steps
   
   build-node6:
     docker:
       - image: node:6
     working_directory: ~/wd
-    steps: *id001
+    steps: *common-steps
 
   build-node7:
     docker:
       - image: node:7
     working_directory: ~/wd
-    steps: *id001
+    steps: *common-steps
