@@ -1,7 +1,7 @@
 {
   "name": "circleci-multiple-versions",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tet for CircleCI 2.0 Triggers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
