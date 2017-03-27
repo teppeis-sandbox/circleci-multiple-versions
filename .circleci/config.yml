@@ -21,11 +21,11 @@ jobs:
             trigger_job build-node6
             trigger_job build-node7
 
-  build-node-common:
+  build-node-common: &common-build
     docker:
       - image: node
     working_directory: ~/wd
-    steps: &common-steps
+    steps:
       - run: npm version
       - run:
           name: Versions
@@ -48,19 +48,16 @@ jobs:
             - node_modules
 
   build-node4:
+    <<: *common-build
     docker:
       - image: node:4
-    working_directory: ~/wd
-    steps: *common-steps
   
   build-node6:
+    <<: *common-build
     docker:
       - image: node:6
-    working_directory: ~/wd
-    steps: *common-steps
 
   build-node7:
+    <<: *common-build
     docker:
       - image: node:7
-    working_directory: ~/wd
-    steps: *common-steps
