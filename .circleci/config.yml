@@ -9,7 +9,6 @@ jobs:
       - run:
           name: Trigger Jobs
           command: |
-            echo $CIRCLE_API_TOKEN
             function trigger_job() {
               job_name=$1
               curl --user ${CIRCLE_API_TOKEN}: \
@@ -25,10 +24,7 @@ jobs:
     docker:
       - image: node
     working_directory: ~/wd
-    environment:
-      NODE_VERSION: 0
     steps:
-      - run: echo "NODE_VERSION $NODE_VERSION"
       - run: npm version
       - run:
           name: Versions
@@ -37,9 +33,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-npm-{{ .Branch }}-node{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
-            - v1-npm-{{ .Branch }}-node{{ .Environment.NODE_VERSION }}-{{ checksum "package.json" }}
-            - v1-npm-master-node{{ .Environment.NODE_VERSION }}-{{ checksum "package.json" }}
+            - v1-npm-{{ .Branch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
+            - v1-npm-master-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
       - run:
           name: Install dependencies
           command: npm i
@@ -47,7 +42,7 @@ jobs:
           name: Test
           command: npm test
       - save_cache:
-          key: v1-npm-{{ .Branch }}-node{{ .Environment.NODE_VERSION }}-{{ checksum "package.json" }}
+          key: v1-npm-{{ .Branch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
           paths:
             - node_modules
 
@@ -55,19 +50,13 @@ jobs:
     <<: *common-build
     docker:
       - image: node:4
-    environment:
-      - NODE_VERSION: 4
   
   build-node6:
     <<: *common-build
     docker:
       - image: node:6
-    environment:
-      NODE_VERSION: 6
 
   build-node7:
     <<: *common-build
     docker:
       - image: node:7
-    environment:
-      NODE_VERSION: 7
