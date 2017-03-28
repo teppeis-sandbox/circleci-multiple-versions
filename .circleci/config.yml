@@ -37,6 +37,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
+            - v1-npm-{{ .Branch }}-node{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
             - v1-npm-{{ .Branch }}-node{{ .Environment.NODE_VERSION }}-{{ checksum "package.json" }}
             - v1-npm-master-node{{ .Environment.NODE_VERSION }}-{{ checksum "package.json" }}
       - run:
