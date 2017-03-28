@@ -25,6 +25,8 @@ jobs:
     docker:
       - image: node
     working_directory: ~/wd
+    environment:
+      NODE_VERSION: 0
     steps:
       - run: npm version
       - run:
