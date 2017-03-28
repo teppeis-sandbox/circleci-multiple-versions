@@ -28,6 +28,7 @@ jobs:
     environment:
       NODE_VERSION: 0
     steps:
+      - run: echo "NODE_VERSION $NODE_VERSION"
       - run: npm version
       - run:
           name: Versions
@@ -54,7 +55,7 @@ jobs:
     docker:
       - image: node:4
     environment:
-      NODE_VERSION: 4
+      - NODE_VERSION: 4
   
   build-node6:
     <<: *common-build
